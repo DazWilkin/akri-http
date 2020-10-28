@@ -1,0 +1,2 @@
+# Exclude protoc-generated files
+protos/*.pb.go
