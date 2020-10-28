@@ -1,6 +1,8 @@
 # Akri: HTTP protocol
 
-## HTTP
+## Protoc
+
+Requires [`protoc`](https://github.com/protocolbuffers/protobuf/releases) in the path
 
  ```bash
  protoc \
