@@ -30,7 +30,7 @@ jobs:
         with:
           context: .
           file: ./deployment/Dockerfile.devices
-          tags: ghcr.io/dazwilkin/akri-http-devices:${{ github.sha }}
+          tags: ghcr.io/{{ github.repository }}-devices:${{ github.sha }}
           push: true
   grpc-server:
     name: grpc-server
