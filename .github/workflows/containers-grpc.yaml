@@ -10,7 +10,7 @@ jobs:
     name: server
     runs-on: ubuntu-20.04
     env:
-      COMPONENT: grpc-server
+      REPO: dazwilkin/akri-http-grpc-server
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -27,13 +27,13 @@ jobs:
         with:
           context: .
           file: ./deployment/Dockerfile.server
-          tags: ghcr.io/${{ github.repository }}-grpc-server:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
   client:
     name: client
     runs-on: ubuntu-20.04
     env:
-      COMPONENT: grpc-client
+      REPO: dazwilkin/akri-http-grpc-client
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -50,5 +50,5 @@ jobs:
         with:
           context: .
           file: ./deployment/Dockerfile.client
-          tags: ghcr.io/${{ github.repository }}-grpc-client:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
