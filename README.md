@@ -5,19 +5,33 @@
 Requires [`protoc`](https://github.com/protocolbuffers/protobuf/releases) in the path
 
  ```bash
- protoc \
- --proto_path=./samples/brokers/http \
- --go_out=plugins=grpc,module=github.com/DazWilkin/akri-http/protos:./golang/http/protos \
- ./samples/brokers/http/proto/http.proto
+MODULE="github.com/DazWilkin/akri-http"
+protoc \
+ --proto_path=./protos \
+ --go_out=plugins=grpc,module=${MODULE}:. \
+ ./protos/http.proto
  ```
 
- > **NOTE** for temporary convenience the `http.proto` exists outside of the repo
+### Container Build
+
+```bash
+USER="dazwilkin" # Or your GitHub username
+REPO="akri-http" # Or your preferred GHCR repo
+TAGS="$(git rev-parse HEAD)"
+
+docker build \
+--tag=ghcr.io/${USER}/${REPO}:${TAGS} \
+--file=./deployment/Dockerfile.devices \
+.
+```
 
 ## Run
 
 ### Devices
 
 Creates an arbitrary number of pseudo-devices (that return random numbers) and a discovery service.
+
+Either:
 
 ```bash
 go run ./cmd/devices
@@ -26,7 +40,45 @@ go run ./cmd/devices
 Or equivalently:
 
 ```bash
-go run ./cmd/devices --discovery_port=9999 --starting_port=8000 --num_devices=10
+DISCO="9999"
+START="8000"
+COUNT="10"
+go run ./cmd/devices --discovery_port=${DISCO} --starting_port=${START} --num_devices=${COUNT}
+```
+
+Or:
+
+```bash
+USER="dazwilkin" # Or your GitHub username
+REPO="akri-http" # Or your preferred GHCR repo
+TAGS="$(git rev-parse HEAD)"
+
+docker run \
+--rm --interactive --tty \
+--publish=0.0.0.0:8000-8100:8000-8100/tcp \
+--publish=9999:9999 \
+ghcr.io/${USER}/${REPO}:${TAGS}
+```
+
+Or the following. This is over-engineered but it shows how you may dynamically revise the discovery, starting ports and the number of devices.
+
+```bash
+USER="dazwilkin" # Or your GitHub username
+REPO="akri-http" # Or your preferred GHCR repo
+TAGS="$(git rev-parse HEAD)"
+
+DISCO="9999"
+START="8000"
+COUNT="10"
+
+docker run \
+--rm --interactive --tty \
+--publish=0.0.0.0:8000-$(echo "8000"+${COUNT}|bc):${START}-$(echo ${START}+${COUNT}|bc)/tcp \
+--publish=9999:${DISCO} \
+ghcr.io/${USER}/${REPO}:${TAGS} \
+  --discovery_port=${DISCO} \
+  --starting_port=${START} \
+  --num_devices=${COUNT}
 ```
 
 > **NOTE** the flags are all integers (not strings)
