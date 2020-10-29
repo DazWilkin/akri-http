@@ -1,5 +1,8 @@
 # Akri: HTTP protocol
 
+![containers-devices](https://github.com/DazWilkin/akri-http/workflows/containers-devices/badge.svg?branch=master)
+![containers-grpc](https://github.com/DazWilkin/akri-http/workflows/containers-grpc/badge.svg)
+
 ## Protoc
 
 Requires [`protoc`](https://github.com/protocolbuffers/protobuf/releases) in the path
