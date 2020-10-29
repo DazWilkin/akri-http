@@ -35,7 +35,7 @@ jobs:
           context: .
           file: ./deployment/Dockerfile.devices
           push: true
-          tags: ${{ github.sha }}
+          tags: ${{ env.REGISTRY }}/akri-http-devices:${{ github.sha }}
   build-grpc-server:
     name: grpc-server
     runs-on: ubuntu-20.04
@@ -62,4 +62,4 @@ jobs:
           context: .
           file: ./deployment/Dockerfile.server
           push: true
-          tags: ${{ github.sha }}
+          tags: ${{ env.REGISTRY }}/akri-http-devices:${{ github.sha }}
