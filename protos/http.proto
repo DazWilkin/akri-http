@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option csharp_namespace = "Nessie";
+option go_package = "github.com/DazWilkin/akri-http/protos";
+
+package http;
+
+service HTTP {
+  rpc Service (ServiceRequest) returns (ServiceResponse);
+}
+
+message ServiceRequest {
+}
+
+message ServiceResponse {
+}
