@@ -15,17 +15,17 @@ COPY . .
 # Compile Go binary
 RUN GOOS=linux \
     go build -a -installsuffix cgo \
-    -o /bin/device \
-    ${MODULE}/cmd/device
+    -o /bin/discovery \
+    ${MODULE}/cmd/discovery
 
 
 FROM gcr.io/distroless/base-debian10
 
-COPY --from=build /bin/device /
+COPY --from=build /bin/discovery /
 
 USER 999
-EXPOSE 8080
+EXPOSE 9999
 
 
-ENTRYPOINT ["/device"]
-CMD ["--path=/","--path=/sensor"]
+ENTRYPOINT ["/discovery"]
+CMD ["--device=device:8000","--device=device:8001"]
