@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: akri
+      protocol: http
+  template:
+    metadata:
+      labels:
+        app: akri
+        protocol: http
+      name: devices
+    spec:
+      imagePullSecrets:
+        - name: ghcr
+      containers:
+        - name: devices
+          image: [[IMAGE]]
+          imagePullPolicy: Always
