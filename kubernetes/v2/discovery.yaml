@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: akri
+      protocol: http
+      function: discovery
+  template:
+    metadata:
+      labels:
+        project: akri
+        protocol: http
+        function: discovery
+      name: discovery
+    spec:
+      imagePullSecrets:
+        - name: ghcr
+      containers:
+        - name: discovery
+          image: [[IMAGE]]
+          imagePullPolicy: Always
+          args:
+            - --device=device:8000
+            - --device=device:8001
+            - --device=device:8002
+            - --device=device:8003
+            - --device=device:8004
+            - --device=device:8005
+            - --device=device:8006
+            - --device=device:8007
+            - --device=device:8008
+            - --device=device:8009
+          ports:
+            - name: http
+              containerPort: 9999
