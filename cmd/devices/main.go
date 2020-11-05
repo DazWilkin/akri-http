@@ -61,6 +61,7 @@ func createDeviceService(addr string) {
 	handler := http.NewServeMux()
 	handler.HandleFunc("/healthz", healthz)
 	handler.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("[device:%s] Handler entered", addr)
 		fmt.Fprint(w, entr.Float64())
 	})
 
@@ -73,7 +74,7 @@ func createDeviceService(addr string) {
 		log.Fatal(err)
 	}
 
-	log.Printf("[main:go] Starting Device: %s", addr)
+	log.Printf("[createDeviceService] Starting Device: %s", addr)
 	log.Fatal(s.Serve(listen))
 }
 func createDiscoveryService(addr string, devices []string) {
@@ -83,6 +84,7 @@ func createDiscoveryService(addr string, devices []string) {
 	handler := http.NewServeMux()
 	handler.HandleFunc("/healthz", healthz)
 	handler.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("[discovery] Handler entered")
 		for _, device := range devices {
 			fmt.Fprintf(w, "%s\n", html.EscapeString(device))
 		}
@@ -97,7 +99,7 @@ func createDiscoveryService(addr string, devices []string) {
 		log.Fatal(err)
 	}
 
-	log.Printf("[main:go] Starting Discovery Service: %s", addr)
+	log.Printf("[createDiscoveryService] Starting Discovery Service: %s", addr)
 	log.Fatal(s.Serve(listen))
 }
 func healthz(w http.ResponseWriter, r *http.Request) {
