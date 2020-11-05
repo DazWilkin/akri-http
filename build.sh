@@ -4,10 +4,12 @@ USER="dazwilkin" # Or your GitHub username
 REPO="akri-http" # Or your preferred GHCR repo
 TAGS="$(git rev-parse HEAD)"
 
-for IMAGE in "client" "server" "devices"
+echo "Ignoring cmd/client and cmd/server"
+
+for IMAGE in "devices" "device"
 do
   docker build \
   --tag=ghcr.io/${USER}/${REPO}-${IMAGE}:${TAGS} \
-  --file=./deployment/Dockerfile.${IMAGE} \
+  --file=./cmd/${IMAGE}/Dockerfile \
   .
 done
