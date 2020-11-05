@@ -1,0 +1,50 @@
+package main
+
+import (
+	"flag"
+	"fmt"
+	"html"
+	"log"
+	"net"
+	"net/http"
+
+	"github.com/DazWilkin/akri-http/shared"
+)
+
+const (
+	addr = ":9999"
+)
+
+var _ flag.Value = (*shared.Paths)(nil)
+var devices shared.Paths
+
+func main() {
+	flag.Var(&devices, "device", "Repeat this flag to add devices to the discovery service")
+	flag.Parse()
+
+	// Handlers: Devices, Healthz
+	handler := http.NewServeMux()
+	handler.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("[main:healthz] Handler entered")
+		fmt.Fprint(w, "ok")
+	})
+	handler.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("[discovery] Handler entered")
+		fmt.Fprintf(w, "%s\n", html.EscapeString(devices.String()))
+	})
+
+	s := &http.Server{
+		Addr:    addr,
+		Handler: handler,
+	}
+	listen, err := net.Listen("tcp", addr)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("[createDiscoveryService] Starting Discovery Service: %s", addr)
+	log.Fatal(s.Serve(listen))
+}
+func healthz(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "ok")
+}

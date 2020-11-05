@@ -7,32 +7,17 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
-	"strings"
 	"time"
+
+	"github.com/DazWilkin/akri-http/shared"
 )
 
 const (
 	addr = ":8080"
 )
 
-// Paths is an alias to use repeated flags with flag
-type Paths []string
-
-// String is a method required by flag.Value interface
-func (e *Paths) String() string {
-	result := strings.Join(*e, "\n")
-	return result
-}
-
-// Set is a method required by flag.Value interface
-func (e *Paths) Set(value string) error {
-	log.Printf("[endpoints:Set] %s", value)
-	*e = append(*e, value)
-	return nil
-}
-
-var _ flag.Value = (*Paths)(nil)
-var paths Paths
+var _ flag.Value = (*shared.Paths)(nil)
+var paths shared.Paths
 
 func main() {
 	flag.Var(&paths, "path", "Repeat this flag to add paths for the device")
