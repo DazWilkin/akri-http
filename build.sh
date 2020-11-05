@@ -6,7 +6,7 @@ TAGS="$(git rev-parse HEAD)"
 
 echo "Ignoring cmd/client and cmd/server"
 
-for IMAGE in "devices" "device"
+for IMAGE in "devices" "device" "discovery"
 do
   docker build \
   --tag=ghcr.io/${USER}/${REPO}-${IMAGE}:${TAGS} \
