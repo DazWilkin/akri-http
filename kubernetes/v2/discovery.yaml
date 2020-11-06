@@ -24,15 +24,15 @@ spec:
           image: [[IMAGE]]
           imagePullPolicy: Always
           args:
-            - --device=http://device-1:8001
-            - --device=http://device-2:8002
-            - --device=http://device-3:8003
-            - --device=http://device-4:8004
-            - --device=http://device-5:8005
-            - --device=http://device-6:8006
-            - --device=http://device-7:8007
-            - --device=http://device-8:8008
-            - --device=http://device-9:8009
+            - --device=http://device-1:8080
+            - --device=http://device-2:8080
+            - --device=http://device-3:8080
+            - --device=http://device-4:8080
+            - --device=http://device-5:8080
+            - --device=http://device-6:8080
+            - --device=http://device-7:8080
+            - --device=http://device-8:8080
+            - --device=http://device-9:8080
           ports:
             - name: http
               containerPort: 9999
