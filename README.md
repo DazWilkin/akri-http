@@ -1,6 +1,7 @@
 # Akri: HTTP protocol
 
 ![containers-devices](https://github.com/DazWilkin/akri-http/workflows/containers-devices/badge.svg?branch=master)
+![containers-device-discovery](https://github.com/DazWilkin/akri-http/workflows/containers-device-discovery/badge.svg)
 ![containers-grpc](https://github.com/DazWilkin/akri-http/workflows/containers-grpc/badge.svg)
 
 
