@@ -114,11 +114,10 @@ Then:
 
 ```bash
 
-# Create one device to rule them all
-kubectl apply --filename=device.yaml
-deployment.apps/device created
+# Create one device deployment
+kubectl apply --filename=./device.yaml
 
-# But multiple services against the singular device
+# But multiple Services against the single Pod
 for NUM in {1..9}
 do
   # Services are uniquely named
@@ -137,6 +136,9 @@ service/device-6 exposed
 service/device-7 exposed
 service/device-8 exposed
 service/device-9 exposed
+
+# Create one discovery deployment
+kubectl apply --filename=./discovery.yaml
 
 # Expose Discovery as a service on its default port: 9999
 # The Discovery service spec is statically configured for devices 1-9
