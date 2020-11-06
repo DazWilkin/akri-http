@@ -4,17 +4,17 @@ import (
 	"strings"
 )
 
-// Paths is an alias to use repeated flags with flag
-type Paths []string
+// RepeatableFlag is an alias to use repeated flags with flag
+type RepeatableFlag []string
 
 // String is a method required by flag.Value interface
-func (e *Paths) String() string {
+func (e *RepeatableFlag) String() string {
 	result := strings.Join(*e, "\n")
 	return result
 }
 
 // Set is a method required by flag.Value interface
-func (e *Paths) Set(value string) error {
+func (e *RepeatableFlag) Set(value string) error {
 	*e = append(*e, value)
 	return nil
 }

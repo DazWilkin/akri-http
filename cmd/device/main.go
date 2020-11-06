@@ -16,8 +16,8 @@ const (
 	addr = ":8080"
 )
 
-var _ flag.Value = (*shared.Paths)(nil)
-var paths shared.Paths
+var _ flag.Value = (*shared.RepeatableFlag)(nil)
+var paths shared.RepeatableFlag
 
 func main() {
 	flag.Var(&paths, "path", "Repeat this flag to add paths for the device")

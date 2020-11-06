@@ -15,10 +15,21 @@ const (
 	addr = ":9999"
 )
 
-var _ flag.Value = (*shared.Paths)(nil)
-var devices shared.Paths
+// Build Info
+var (
+	BuildDate string
+	BuildUser string
+	Version   string
+)
+
+var _ flag.Value = (*shared.RepeatableFlag)(nil)
+var devices shared.RepeatableFlag
 
 func main() {
+	log.Printf("[main] Version: %s", Version)
+	log.Printf("[main] Build user: %s", BuildUser)
+	log.Printf("[main] Build date: %s", BuildDate)
+
 	flag.Var(&devices, "device", "Repeat this flag to add devices to the discovery service")
 	flag.Parse()
 
