@@ -26,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./deployment/Dockerfile.devices
+          file: ./cmd/devices/Dockerfile
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
