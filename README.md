@@ -1,8 +1,11 @@
 # Akri: HTTP protocol
 
-![containers-devices](https://github.com/DazWilkin/akri-http/workflows/containers-devices/badge.svg?branch=master)
-![containers-device-discovery](https://github.com/DazWilkin/akri-http/workflows/containers-device-discovery/badge.svg)
-![containers-grpc](https://github.com/DazWilkin/akri-http/workflows/containers-grpc/badge.svg)
+![devices](https://github.com/DazWilkin/akri-http/workflows/containers-devices/badge.svg?branch=master)
+![device-discovery](https://github.com/DazWilkin/akri-http/workflows/containers-device-discovery/badge.svg)
+![grpc](https://github.com/DazWilkin/akri-http/workflows/containers-grpc/badge.svg)
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/DazWilkin/akri-http)](https://goreportcard.com/report/github.com/DazWilkin/akri-http)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/DazWilkin/akri-http)](https://pkg.go.dev/github.com/DazWilkin/akri-http)
 
 
 ## v2
