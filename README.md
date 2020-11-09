@@ -57,9 +57,9 @@ do
   --publish=${PORT}:8080 \
   ghcr.io/${USER}/akri-http-device:${TAG}
     --path="/sensor1" \
-    --path="/sensor2"
+    --path="/sensor2" \
   # Add the device to the discovery document
-  DISCOVERY+=("--device=device:${PORT} ")
+  DISCOVERY+=("--device=localhost:${PORT} ")
 done
 
 # Create a discovery server for these devices
@@ -74,16 +74,16 @@ Test:
 
 ```bash
 curl localhost:9999/
-device:8000
-device:8001
-device:8002
-device:8003
-device:8004
-device:8005
-device:8006
-device:8007
-device:8008
-device:8009
+localhost:8000
+localhost:8001
+localhost:8002
+localhost:8003
+localhost:8004
+localhost:8005
+localhost:8006
+localhost:8007
+localhost:8008
+localhost:8009
 
 curl localhost:8006/sensor
 ```
