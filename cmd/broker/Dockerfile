@@ -32,17 +32,17 @@ RUN protoc \
 # Compile Go binary
 RUN GOOS=linux \
     go build -a -installsuffix cgo \
-    -o /bin/server \
-    ${MODULE}/cmd/server
+    -o /bin/broker \
+    ${MODULE}/cmd/broker
 
 
 FROM gcr.io/distroless/base-debian10
 
-COPY --from=build /bin/server /
+COPY --from=build /bin/broker /
 
 USER 999
 
 EXPOSE 50051
 
-ENTRYPOINT ["/server"]
+ENTRYPOINT ["/broker"]
 CMD ["--grpc_endpoint=:50051"]

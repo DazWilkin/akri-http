@@ -36,7 +36,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := pb.NewHTTPClient(conn)
+	client := pb.NewDeviceServiceClient(conn)
 	ctx := context.Background()
 
 	for {
@@ -44,8 +44,11 @@ func main() {
 
 		// Call Service
 		{
-			rqst := &pb.ServiceRequest{}
-			resp, err := client.Service(ctx, rqst)
+			rqst := &pb.ReadSensorRequest{
+				Name: "/",
+			}
+			log.Println("[main:loop] Calling read_sensor")
+			resp, err := client.ReadSensor(ctx, rqst)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -54,9 +57,7 @@ func main() {
 		}
 
 		// Add a pause between iterations
-		log.Println("[main:loop] Sleeping 5 seconds")
-		time.Sleep(5 * time.Second)
-		log.Println("[main:loop] Resuming")
+		log.Println("[main:loop] Sleep")
+		time.Sleep(10 * time.Second)
 	}
-
 }

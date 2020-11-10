@@ -7,10 +7,10 @@ on:
 
 jobs:
   server:
-    name: server
+    name: broker
     runs-on: ubuntu-20.04
     env:
-      REPO: dazwilkin/akri-http-grpc-server
+      REPO: dazwilkin/akri-http-grpc-broker-golang
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
     name: client
     runs-on: ubuntu-20.04
     env:
-      REPO: dazwilkin/akri-http-grpc-client
+      REPO: dazwilkin/akri-http-grpc-client-golang
     steps:
       - name: checkout
         uses: actions/checkout@v2

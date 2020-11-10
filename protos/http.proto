@@ -1,16 +1,17 @@
 syntax = "proto3";
 
-option csharp_namespace = "Nessie";
+option csharp_namespace = "HTTP";
 option go_package = "github.com/DazWilkin/akri-http/protos";
 
 package http;
 
-service HTTP {
-  rpc Service (ServiceRequest) returns (ServiceResponse);
+service DeviceService {
+    rpc ReadSensor (ReadSensorRequest) returns (ReadSensorResponse);
 }
 
-message ServiceRequest {
+message ReadSensorRequest {
+    string name = 1;
 }
-
-message ServiceResponse {
+message ReadSensorResponse {
+    string value = 1;
 }
