@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./cmd/server/Dockerfile
+          file: ./cmd/broker/Dockerfile
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
   client:
