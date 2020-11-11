@@ -1,0 +1,30 @@
+apiVersion: akri.sh/v0
+kind: Configuration
+metadata:
+  name: http-grpc-broker-golang
+spec:
+  protocol:
+    http:
+      discoveryEndpoint: http://discovery:9999
+  capacity: 1
+  brokerPodSpec:
+    imagePullSecrets: # GitHub Container Registry secret
+      - name: ghcr
+    containers:
+      - name: http-grpc-broker-golang
+        image: ghcr.io/dazwilkin/http-grpc-broker-golang@sha256:96079c319a9e1e34505bd6769d63d04758b28f7bf788460848dd04f116ecea7e
+        args:
+          - --grpc_endpoint=0.0.0.0:50051
+        resources:
+          limits:
+            "{{PLACEHOLDER}}": "1"
+  instanceServiceSpec:
+    ports:
+      - name: grpc
+        port: 50051
+        targetPort: 50051
+  configurationServiceSpec:
+    ports:
+      - name: grpc
+        port: 50051
+        targetPort: 50051
