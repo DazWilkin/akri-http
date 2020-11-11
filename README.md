@@ -73,19 +73,19 @@ docker run \
 Test:
 
 ```bash
-curl localhost:9999/
-localhost:8000
-localhost:8001
-localhost:8002
-localhost:8003
-localhost:8004
-localhost:8005
-localhost:8006
-localhost:8007
-localhost:8008
-localhost:8009
+curl http://localhost:9999/
+http://localhost:8000
+http://localhost:8001
+http://localhost:8002
+http://localhost:8003
+http://localhost:8004
+http://localhost:8005
+http://localhost:8006
+http://localhost:8007
+http://localhost:8008
+http://localhost:8009
 
-curl localhost:8006/sensor
+curl http://localhost:8006/sensor
 ```
 
 To stop:
@@ -148,16 +148,16 @@ kubectl expose deployment/discovery \
 --target-port=9999
 
 kubectl run curl --image=radial/busyboxplus:curl --stdin --tty --rm
-curl discovery:9999
-device-1:8080
-device-2:8080
-device-3:8080
-device-4:8080
-device-5:8080
-device-6:8080
-device-7:8080
-device-8:8080
-device-9:8080
+curl http://discovery:9999
+http://device-1:8080
+http://device-2:8080
+http://device-3:8080
+http://device-4:8080
+http://device-5:8080
+http://device-6:8080
+http://device-7:8080
+http://device-8:8080
+http://device-9:8080
 ```
 
 Delete:
@@ -202,14 +202,43 @@ docker build \
 .
 ```
 
-### gRPC Broker
+### Golang
+
+Then run the gRPC Broker:
 
 ```bash
-go run ./cmd/broker --grpc_endpoint=:50051
+PORT=50051
+go run ./cmd/broker --grpc_endpoint=:${PORT}
 ```
 
-### gRPC Client
+The run the gRPC Client
 
 ```bash
-go run ./cmd/client --grpc_endpoint=:50051
+go run ./cmd/client --grpc_endpoint=:${PORT}
 ```
+
+
+These are containerized too:
+
+```bash
+docker run \
+--rm --interactive --tty \
+--net=host \
+--name=grpc-broker-golang \
+--env=AKRI_HTTP_DEVICE_ENDPOINT=localhost:8005 \
+ghcr.io/dazwilkin/akri-http-grpc-broker-golang:latest \
+--grpc_endpoint=:50051
+```
+
+And:
+
+```bash
+docker run \
+--rm --interactive --tty \
+--net=host \
+--name=grpc-client-golang \
+ghcr.io/dazwilkin/akri-http-grpc-client-golang:latest \
+--grpc_endpoint=:50051
+```
+
+
