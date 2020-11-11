@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"net"
 	"os"
@@ -35,7 +34,7 @@ func main() {
 
 	serverOpts := []grpc.ServerOption{}
 	grpcServer := grpc.NewServer(serverOpts...)
-	pb.RegisterDeviceServiceServer(grpcServer, NewServer(fmt.Sprintf("http://%s", deviceURL)))
+	pb.RegisterDeviceServiceServer(grpcServer, NewServer(deviceURL))
 
 	listen, err := net.Listen("tcp", *grpcEndpoint)
 	if err != nil {
