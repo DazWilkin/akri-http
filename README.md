@@ -55,11 +55,11 @@ do
   --rm --detach=true \
   --name=device-${PORT} \
   --publish=${PORT}:8080 \
-  ghcr.io/${USER}/akri-http-device:${TAG}
+  ghcr.io/${USER}/akri-http-device:${TAG} \
     --path="/sensor1" \
     --path="/sensor2" \
   # Add the device to the discovery document
-  DISCOVERY+=("--device=localhost:${PORT} ")
+  DISCOVERY+=("--device=http://localhost:${PORT} ")
 done
 
 # Create a discovery server for these devices
