@@ -15,6 +15,18 @@ spec:
         image: ghcr.io/dazwilkin/http-grpc-broker-golang@sha256:96079c319a9e1e34505bd6769d63d04758b28f7bf788460848dd04f116ecea7e
         args:
           - --grpc_endpoint=0.0.0.0:50051
+        readinessProbe:
+          exec:
+            command:
+              - /bin/grpc_health_probe
+              - --addr=:50051 # Must match grpc_endpoint
+          initialDelaySeconds: 5
+        livenessProbe:
+          exec:
+            command:
+              - /bin/grpc_health_probe
+              - --addr=:50051 # Must match grpc_endpoint
+          initialDelaySeconds: 10
         resources:
           limits:
             "{{PLACEHOLDER}}": "1"

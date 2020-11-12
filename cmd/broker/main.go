@@ -9,6 +9,8 @@ import (
 	pb "github.com/DazWilkin/akri-http/protos"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 
 const (
@@ -34,7 +36,12 @@ func main() {
 
 	serverOpts := []grpc.ServerOption{}
 	grpcServer := grpc.NewServer(serverOpts...)
+
+	// Register this module's DeviceService
 	pb.RegisterDeviceServiceServer(grpcServer, NewServer(deviceURL))
+
+	// Register Golang Healthcheck service
+	healthpb.RegisterHealthServer(grpcServer, health.NewServer())
 
 	listen, err := net.Listen("tcp", *grpcEndpoint)
 	if err != nil {

@@ -241,4 +241,51 @@ ghcr.io/dazwilkin/akri-http-grpc-client-golang:latest \
 --grpc_endpoint=:50051
 ```
 
+### Healthcheck
+
+The Broker implements gRPC Healthchecking:
+
+Optional: Install grpc_health_probe
+
+```bash
+VERSION=v0.3.1 && \
+wget \
+--quiet \
+--output-document=./grpc_health_probe \
+https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${VERSION}/grpc_health_probe-linux-amd64 && \
+chmod +x ./grpc_health_probe
+```
+
+Run a Device:
+
+```bash
+TAG="e137ed7816d9d39c4277e556b9cadec4b97ed98a"
+PORT="8007"
+
+docker run \
+--interactive --tty --rm \
+--name=device-8007 \
+--publish=${PORT}:8080 \
+ghcr.io/dazwilkin/akri-http-device:${TAG} \
+--path="/sensor1" \
+--path="/sensor2"
+```
+
+Then the Broker:
+
+```bash
+GRPC="50051"
+AKRI_HTTP_DEVICE_ENDPOINT=http://localhost:${PORT} \
+go run ./cmd/broker --grpc_endpoint=0.0.0.0:${GRPC}
+2020/11/12 08:45:43 [main] Starting gRPC server
+2020/11/12 08:45:43 [main] Starting gRPC Listener [:50051]
+```
+
+Then the Healthchecker:
+
+```bash
+./grpc_health_probe --addr=0.0.0.0:${GRPC}
+status: SERVING
+```
+
 
