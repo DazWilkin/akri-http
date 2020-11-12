@@ -35,11 +35,6 @@ RUN GOOS=linux \
     -o /bin/broker \
     ${MODULE}/cmd/broker
 
-
-FROM gcr.io/distroless/base-debian10
-
-COPY --from=build /bin/broker /
-
 # Install gRPC healthcheck
 RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
     wget \
@@ -47,6 +42,11 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
     --output-document=/bin/grpc_health_probe \
     https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
+
+FROM gcr.io/distroless/base-debian10
+
+COPY --from=build /bin/broker /
+COPY --from=build /bin/grpc_health_probe /
 
 USER 999
 

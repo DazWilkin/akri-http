@@ -18,13 +18,13 @@ spec:
         readinessProbe:
           exec:
             command:
-              - /bin/grpc_health_probe
+              - /grpc_health_probe
               - --addr=:50051 # Must match grpc_endpoint
           initialDelaySeconds: 5
         livenessProbe:
           exec:
             command:
-              - /bin/grpc_health_probe
+              - /grpc_health_probe
               - --addr=:50051 # Must match grpc_endpoint
           initialDelaySeconds: 10
         resources:
