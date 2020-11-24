@@ -21,12 +21,10 @@ spec:
         - name: ghcr
       containers:
         - name: device
-          image: [[IMAGE]]
+          image: IMAGE
           imagePullPolicy: Always
           args:
             - --path=/
-            - --path=/sensor1
-            - --path=/sensor2
           ports:
             - name: http
               containerPort: 8080
