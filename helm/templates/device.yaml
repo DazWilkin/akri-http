@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.device.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: akri
+      protocol: http
+      function: device
+  template:
+    metadata:
+      labels:
+        project: akri
+        protocol: http
+        function: device
+      name: {{ .Values.device.name }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 12 }}
+      {{- end }}
+      containers:
+        - name: device
+          image: {{ printf "%s:%s" .Values.device.image.repository .Values.device.image.tag | quote }}
+          imagePullPolicy: {{ .Values.device.image.pullPolicy }}
+          args:
+            - --path=/
+          ports:
+            - name: http
+              containerPort: 8080

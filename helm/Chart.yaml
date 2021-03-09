@@ -1,0 +1,7 @@
+apiVersion: v2
+name: akri-http
+description: A Helm chart for Akri HTTP Device-Discovery
+
+type: application
+version: 0.0.1
+appVersion: 0.0.1
