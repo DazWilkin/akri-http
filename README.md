@@ -7,6 +7,18 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/DazWilkin/akri-http)](https://goreportcard.com/report/github.com/DazWilkin/akri-http)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/DazWilkin/akri-http)](https://pkg.go.dev/github.com/DazWilkin/akri-http)
 
+## Table of Contents
+
++ Device|Discovery Services
+  + Golang
+  + Docker
+  + Kubernetes
+  + Helm
++ gRPC Broker|Client
+  + Protoc
+  + Container Build
+  + Golang
+  + Healthcheck
 
 ## Device|Discovery Services
 
@@ -174,6 +186,58 @@ do
 done
 ```
 
+### Helm
+
+```bash
+```bash
+VERS="3.5.2"
+alias helm3="docker run \
+--interactive --tty --rm \
+--volume=${HOME}/.kube:/root/.kube \
+--volume=${PWD}/.helm:/root/.helm \
+--volume=${PWD}/.config/helm:/root/.config/helm \
+--volume=${PWD}/.cache/helm:/root/.cache/helm \
+--volume=${PWD}:/apps \
+alpine/helm:${VERS}"
+```
+
+Then:
+
+```bash
+helm3 install akri-http ./helm \
+--namespace=${NAMESPACE} \
+--set=device.count=5 \
+--set=device.name="device" \
+--set=device.port=8080 \
+--set=discovery.name="discovery" \
+--set=discovery.port=9999
+```
+
+And:
+
+```bash
+kubectl run curl \
+--stdin --tty --rm \
+--image=curlimages/curl \
+--namespace=${NAMESPACE} \
+-- sh
+
+/ $ curl http://discovery:9999
+http://device-00:8080
+http://device-01:8080
+http://device-02:8080
+http://device-03:8080
+http://device-04:8080
+/ $ curl http://device-03:8080
+0.792962080942022/ $ 
+```
+
+And, when done:
+
+```bash
+helm uninstall akri-http \
+--namespace=${NAMESPACE}
+```
 
 ## gRPC Broker|Client
 
