@@ -23,7 +23,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR }}
       - name: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.4.0
         with:
           context: .
           file: ./cmd/device/Dockerfile
@@ -46,7 +46,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR }}
       - name: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.4.0
         with:
           context: .
           file: ./cmd/discovery/Dockerfile
